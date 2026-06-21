@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Laurine Gautier</title>
+<meta name="description" content="Portfolio de Laurine Gautier — BUT Science des données, IUT de Vannes">
+
+<!--
+============================================================================
+GUIDE RAPIDE
+============================================================================
+1. NAVIGATION : un onglet = un bloc (Traiter / Analyser / Valoriser /
+   Développer). Les étiquettes "Bloc commun" / "Bloc parcours" sont juste
+   des repères visuels non cliquables.
+
+2. CHAQUE BLOC affiche : son intitulé, ses composantes essentielles
+   (repliables, cliquer sur le résumé pour les afficher), puis directement
+   ses projets.
+
+3. PROJETS : tout se passe dans le tableau PROJECTS, en bas de page.
+   Un projet n'est écrit qu'une seule fois, même s'il illustre plusieurs
+   blocs : listez tous les codes concernés dans "competences", avec pour
+   chacun les techniques/outils mobilisés dans "ce". La fiche affiche
+   TOUJOURS l'ensemble des compétences et techniques du projet, quel que
+   soit le bloc depuis lequel on le consulte.
+   Le champ "annee" alimente automatiquement le filtre, affiché en haut
+   du contenu (au-dessus des projets).
+
+4. Pour ajouter un bloc : dupliquez un onglet (+ son étiquette de groupe
+   si besoin) dans .tab-group, et la <section class="bloc">...</section>
+   correspondante. Donnez-lui un id (ex: bc05) utilisé à la fois par
+   l'onglet (href="#bc05") et la section (id="bc05"), et un code de
+   compétence (ex: C5.1) utilisé par son conteneur .projets.
+
+5. Le statut d'un bloc se change via la classe du badge :
+   badge--valide / badge--cours / badge--avenir.
+
+6. Pour publier : déposez ce fichier seul sur GitHub Pages, Netlify, ou
+   tout hébergement statique.
+============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper: #ECEEE9;
+    --card: #F7F8F4;
+    --ink: #1C211D;
+    --ink-soft: #4F564D;
+    --line: #CDD2C7;
+    --green: #2F6B4F;
+    --green-bg: #E3ECE5;
+    --blue: #2A5A8C;
+    --blue-bg: #E2E9F0;
+    --rust: #9C4A2E;
+    --rust-bg: #F1E5DF;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Work Sans", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+    --nav-width: 220px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+  :focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  .skip-link{
+    position: absolute; left: -999px; top: 0;
+    background: var(--ink); color: var(--paper);
+    padding: 0.6rem 1rem; z-index: 100;
+  }
+  .skip-link:focus{ left: 1rem; top: 1rem; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 4.5rem 1.5rem 3rem;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .hero__eyebrow{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin: 0 0 0.9rem;
+  }
+  .hero__nom{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.3rem, 6vw, 3.4rem);
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .hero__formation{
+    font-family: var(--mono);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.6rem;
+  }
+  .hero__intro{
+    font-size: 1.08rem;
+    max-width: 60ch;
+    color: var(--ink-soft);
+    margin: 0 0 1.8rem;
+  }
+  .hero__contact{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .hero__contact a{
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+  }
+  .hero__contact a:hover{ color: var(--green); border-color: var(--green); }
+
+  /* ---------- LAYOUT ---------- */
+  .layout{
+    display: flex;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+    gap: 2.5rem;
+  }
+
+  /* ---------- DOSSIER NAV (onglets = blocs) ---------- */
+  .dossier-nav{
+    position: sticky;
+    top: 1.5rem;
+    flex: 0 0 var(--nav-width);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .bloc-label{
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.75;
+    margin: 0.9rem 0 0.15rem;
+    padding-left: 0.3rem;
+  }
+  .bloc-label:first-child{ margin-top: 0; }
+  .tab{
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 0.9rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transform: translateX(0.6rem);
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .tab:hover{ transform: translateX(0.2rem); color: var(--ink); }
+  .tab.active{
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateX(0);
+    border-color: var(--ink);
+  }
+  .nav-add{
+    margin: 0.6rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    opacity: 0.65;
+    padding: 0 0.9rem;
+  }
+
+  /* ---------- MAIN ---------- */
+  main{ flex: 1 1 auto; min-width: 0; }
+
+  /* Filtre par année : placé avant les projets, pas dans le menu latéral */
+  .year-filter-bar{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    padding: 0.9rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 1.5rem;
+    background: var(--paper);
+    z-index: 4;
+  }
+  .year-filter-bar__label{
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    flex: 0 0 auto;
+  }
+  .year-filters{ display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .year-pill{
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .year-pill:hover{ border-color: var(--ink-soft); color: var(--ink); }
+  .year-pill.active{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .bloc{
+    padding-top: 1.5rem;
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 5.5rem;
+  }
+  .bloc:not(:first-of-type){
+    border-top: 1px solid var(--line);
+    padding-top: 3rem;
+  }
+  .bloc__header{ margin-bottom: 1.6rem; }
+  .bloc__group{
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin: 0 0 0.3rem;
+  }
+  .bloc__titletop{
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .bloc__titre{
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: 600;
+    margin: 0;
+  }
+  .bloc__desc{
+    color: var(--ink-soft);
+    max-width: 65ch;
+    margin: 0.6rem 0 0;
+  }
+
+  /* composantes essentielles, repliables */
+  .ce-details{ margin-top: 1rem; }
+  .ce-details summary{
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    list-style: none;
+  }
+  .ce-details summary::-webkit-details-marker{ display: none; }
+  .ce-details summary::before{
+    content: "▸ ";
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .ce-details[open] summary::before{ transform: rotate(90deg); }
+  .ce-list{
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ce-list li{
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--line);
+    line-height: 1.5;
+  }
+  .ce-list strong{
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink);
+    margin-right: 0.3rem;
+  }
+
+  /* ---------- STATUS BADGE (tampon de validation) ---------- */
+  .badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.6rem 0.25rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge::before{
+    content: "";
+    width: 0.6rem; height: 0.6rem;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: inline-block;
+  }
+  .badge--valide{ background: var(--green-bg); color: var(--green); }
+  .badge--valide::before{ background: var(--green); }
+  .badge--cours{ background: var(--blue-bg); color: var(--blue); }
+  .badge--cours::before{ background: transparent; }
+  .badge--avenir{ background: var(--rust-bg); color: var(--rust); }
+  .badge--avenir::before{ background: transparent; }
+
+  /* ---------- PROJECT CARDS (générées par script) ---------- */
+  .projets{
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    margin-top: 1.6rem;
+  }
+  .projet{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.5rem 1.6rem;
+  }
+  .projet.is-hidden{ display: none; }
+  .projet__meta{
+    display: flex;
+    gap: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .projet__titre{
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .projet__desc{
+    margin: 0 0 1rem;
+    color: var(--ink-soft);
+    max-width: 70ch;
+  }
+  .projet__group{ margin-bottom: 0.8rem; }
+  .projet__group-label{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.75;
+    margin: 0 0 0.4rem;
+  }
+  .projet__pills{ display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+    color: var(--ink-soft);
+  }
+  .tag--comp{
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 500;
+  }
+  .projet__lien{
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+  }
+  .projet__lien:hover{ color: var(--green); border-color: var(--green); }
+
+  .projet-empty{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    opacity: 0.75;
+    margin-top: 1.2rem;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .layout{ flex-direction: column; }
+    .dossier-nav{
+      position: sticky;
+      top: 0;
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      background: var(--paper);
+      padding: 0.8rem 0 0.6rem;
+      gap: 0.5rem;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+    }
+    .bloc-label{
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0 0.6rem;
+      border-left: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+    }
+    .bloc-label:first-child{ border-left: none; padding-left: 0; }
+    .tab{
+      flex: 0 0 auto;
+      transform: none;
+      border-radius: 6px;
+      border-right: 1px solid var(--line);
+    }
+    .nav-add{ display: none; }
+    .year-filter-bar{ position: static; top: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; }
+  }
+
+  @media print{
+    .dossier-nav{ display: none; }
+    .layout{ display: block; }
+    .projet.is-hidden{ display: block; }
+    .ce-details{ display: block; }
+    body{ background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#contenu" class="skip-link">Aller au contenu</a>
+
+<!-- ======================= EN-TÊTE / PRÉSENTATION ======================= -->
+<header class="hero">
+  <p class="hero__eyebrow">Portfolio de BUT2</p>
+  <h1 class="hero__nom">Laurine GAUTIER</h1>
+  <p class="hero__formation">BUT Science des données · IUT de Vannes · Année universitaire 2025-2026</p>
+  <p class="hero__intro">
+    Étudiante en BUT Science des données, je m’intéresse particulièrement à l’analyse statistique
+    et à la valorisation des données à travers des outils décisionnels. Ce portfolio présente les
+    projets qui illustrent ma progression et ma maîtrise des compétences de ma formation.
+  </p>
+  <div class="hero__contact">
+    <a href="mailto:laurine.gautier2006@gmail.com">laurine.gautier2006@gmail.com</a>
+    <a href="tel:0749980232">07 49 98 02 32</a>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ======================= NAVIGATION (onglets) ======================= -->
+  <nav class="dossier-nav" aria-label="Navigation du portfolio">
+    <p class="bloc-label">Bloc commun</p>
+    <a href="#bc01" class="tab active" data-tab="bc01">Traiter</a>
+    <a href="#bc02" class="tab" data-tab="bc02">Analyser</a>
+    <a href="#bc03" class="tab" data-tab="bc03">Valoriser</a>
+
+    <p class="bloc-label">Bloc parcours</p>
+    <a href="#bc04" class="tab" data-tab="bc04">Développer</a>
+
+    <p class="nav-add"></p>
+  </nav>
+
+  <main id="contenu">
+
+    <!-- Filtre par année : généré automatiquement à partir du champ "annee"
+         de chaque projet dans PROJECTS. Placé ici, avant les projets,
+         il s'applique à tous les blocs en même temps. -->
+    <div class="year-filter-bar">
+      <p class="year-filter-bar__label">Filtrer par année</p>
+      <div class="year-filters" id="yearFilters"></div>
+    </div>
+
+    <!-- ======================= BLOC TRAITER ======================= -->
+    <section class="bloc" id="bc01" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc commun</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Traiter</h2>
+          <span class="badge badge--valide">Validé</span>
+        </div>
+        <p class="bloc__desc">Traiter des données à des fins décisionnelles.</p>
+
+        <details class="ce-details">
+          <summary>Composantes essentielles du référentiel</summary>
+          <ul class="ce-list">
+            <li><strong>CE1.01 :</strong> En intervenant à toutes les étapes du cyle de vie de la donnée (insertion, modification, extraction, suppression).</li>
+            <li><strong>CE1.02 :</strong> En utilisant le modèle de données adapté aux besoins.</li>
+            <li><strong>CE1.03 :</strong> En s'inscrivant dans une démarche de documentation des réalisation adaptées au public visé.</li>
+            <li><strong>CE1.04 :</strong> En traduisant correctement les demandes métier en programmes, avec le respect du cahier des charges s'il existe.</li>
+            <li><strong>CE1.05 :</strong> En écrivant un programme correctement structuré et documenté, respectant les bonnes pratiques.</li>
+            <li><strong>CE1.06 :</strong> En identifiant les librairies et langages dédiés.</li>
+          </ul>
+        </details>
+      </header>
+
+      <div class="projets" data-comp="C1.1"></div>
+      <p class="projet-empty" data-comp-empty="C1.1">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+    <!-- ======================= BLOC ANALYSER ======================= -->
+    <section class="bloc" id="bc02" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc commun</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Analyser</h2>
+          <span class="badge badge--cours">En cours</span>
+        </div>
+        <p class="bloc__desc">Analyser statistiquement les données.</p>
+
+        <details class="ce-details">
+          <summary>Composantes essentielles du référentiel</summary>
+          <ul class="ce-list">
+            <li><strong>CE2.01 :</strong> En tenant compte du contexte de l'étude (économique, socio-démographique, commerciale, clinique...).</li>
+            <li><strong>CE2.02 :</strong> En mettant en évidence les grandes tendanes et les informations principales.</li>
+            <li><strong>CE2.03 :</strong> En identifiant et en mettant en œuvre les techniques adaptées aux attentes du client ou de l'instance décisionnaire.</li>
+            <li><strong>CE2.04 :</strong> En identifiant et en mettant en œuvre les techniques adaptées aux données complexes (données massives, données mal structurées, flux de données...).</li>
+            <li><strong>CE2.05 :</strong> En tenant compte du contexte inférentiel (variabilité de l'échantillon).</li>
+          </ul>
+        </details>
+      </header>
+
+      <div class="projets" data-comp="C2.1"></div>
+      <p class="projet-empty" data-comp-empty="C2.1">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+    <!-- ======================= BLOC VALORISER ======================= -->
+    <section class="bloc" id="bc03" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc commun</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Valoriser</h2>
+          <span class="badge badge--valide">Validé</span>
+        </div>
+        <p class="bloc__desc">Valoriser une production dans un contexte professionnel.</p>
+
+        <details class="ce-details">
+          <summary>Composantes essentielles du référentiel</summary>
+          <ul class="ce-list">
+            <li><strong>CE3.01 :</strong> En s'adaptant au niveau d'expertise, à la culture et au statut du destinataire.</li>
+            <li><strong>CE3.02 :</strong> En s'exprimant correctement, aussi bien en français qu'en aiglais, à l'oral comme à l'écrit.</li>
+            <li><strong>CE3.03 :</strong> En veillant aux aspects éthiques, déontologiques et réglementaires d'utilisation et de diffusion des données.</li>
+            <li><strong>CE3.04 :</strong> En interprétant et contextualisant les résultats (citations, vérification des sources, esprit critique).</li>
+            <li><strong>CE3.05 :</strong> En utilisant la forme de restitution adaptée.</li>
+            <li><strong>CE3.06 :</strong> En tenant compte des réalités économiques et managériales des entreprises.</li>
+          </ul>
+        </details>
+      </header>
+
+      <div class="projets" data-comp="C3.1"></div>
+      <p class="projet-empty" data-comp-empty="C3.1">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+    <!-- ======================= BLOC DÉVELOPPER ======================= -->
+    <section class="bloc" id="bc04" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc parcours</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Développer</h2>
+          <span class="badge badge--valide">Validé</span>
+        </div>
+        <p class="bloc__desc">Développer un outil décisionnel.</p>
+
+        <details class="ce-details">
+          <summary>Composantes essentielles du référentiel</summary>
+          <ul class="ce-list">
+            <li><strong>CE4.01 :</strong> En mettant en œuvre une structuration des données adaptée à leurs caractéristiques (type, volume...).</li>
+            <li><strong>CE4.02 :</strong> En assurant la qualité des données et minimisant les biais liés à l'incertitude et l'imprécision dans les sources.</li>
+            <li><strong>CE4.03 :</strong> En étant sensible aux aspects éthiques, déonthologiques et juridiques d'utilisation et de diffusion des données.</li>
+            <li><strong>CE4.04 :</strong> En réalisant des solutions de visualisation spécifiques aux données métier.</li>
+            <li><strong>CE4.05 :</strong> En intervenant à différents niveaux de la chaîne décisionnelle.</li>
+            <li><strong>CE4.06 :</strong> En utilisant des méthodes de développement logiciel.</li>
+          </ul>
+        </details>
+      </header>
+
+      <div class="projets" data-comp="C4.1"></div>
+      <p class="projet-empty" data-comp-empty="C4.1">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>Laurine GAUTIER — Portfolio mis à jour en juin 2026</p>
+</footer>
+
+<script>
+/* ============================================================================
+   PROJECTS — la seule liste à tenir à jour.
+   Chaque projet n'est écrit qu'une fois, même s'il sert plusieurs blocs :
+   listez tous les codes concernés dans "competences", avec pour chacun les
+   techniques/outils mobilisés dans "ce". La fiche affiche TOUJOURS
+   l'ensemble des compétences et techniques du projet (pas de tri par bloc).
+   ============================================================================ */
+const PROJECTS = [
+  {
+    id: "projet-1",
+    titre: "Conception de tableaux de bord interactifs pour le suivi des routes",
+    periode: "Mars – Juin 2026",
+    annee: "2025-2026",
+    contexte: "Stage BUT2 à la DIR Ouest",
+    description: "Dans le cadre d’un stage de 2ᵉ année de BUT à la DIR Ouest, une étude statistique a été réalisée afin d’évaluer le nombre d’habilitations des agents à la conduite d’engins (ACES et CACES) par rapport aux objectifs fixés pour chaque CEI. Développée en R et R Markdown, cette analyse a nécessité un important travail de traitement, d’automatisation et de sécurisation des données, pour produire des rapports destinés aux districts et à la direction. Le stage a également porté sur l’analyse de la sécurité et du bien-être au travail des agents (agressions et incivilités, accidents du travail et accidents matériels). Cette étude a été faite avec Talend, PostgreSQL et Superset pour obtenir un tableau de bord qui présente de manière interactive les résultats de l’étude statistique : chiffres clés, profils des agents touchés, évolutions temporelles, localisations les plus touchées, etc.",
+    lien: "#",
+    competences: [
+      { code: "C1.1", ce: ["Traitement des données", "Automatisation", "R / RMarkdown"] },
+      { code: "C2.1", ce: ["Analyse statistique", "Interprétation des résultats"] },
+      { code: "C3.1", ce: ["Datavisualisation", "Communication des résultats"] },
+      { code: "C4.1", ce: ["Superset", "PostgreSQL", "Talend"] }
+    ]
+  },
+  {
+    id: "projet-2",
+    titre: "[Titre du projet]",
+    periode: "[ex. Janvier 2025]",
+    annee: "2024-2025",
+    contexte: "[Cours / Projet personnel]",
+    description: "[Décrivez le contexte, votre démarche, le résultat obtenu, et en quoi ce projet démontre cette compétence.]",
+    lien: "#",
+    competences: [
+      { code: "C1.1", ce: ["[Technique ou outil]"] }
+    ]
+  },
+  {
+    id: "projet-3",
+    titre: "[Titre du projet]",
+    periode: "[ex. Stage – Été 2024]",
+    annee: "2024-2025",
+    contexte: "[Cours / Projet personnel]",
+    description: "[Décrivez le contexte, votre démarche, le résultat obtenu, et en quoi ce projet démontre cette compétence.]",
+    lien: "#",
+    competences: [
+      { code: "C2.1", ce: ["[Technique ou outil]", "[Technique ou outil]"] }
+    ]
+  }
+  // Pour ajouter un projet : copiez un objet { ... } ci-dessus, changez son id,
+  // et listez dans "competences" tous les couples {code, ce} concernés.
+];
+
+function buildCard(project){
+  const article = document.createElement("article");
+  article.className = "projet";
+  article.dataset.annee = project.annee;
+  article.dataset.id = project.id;
+
+  const compPills = project.competences.map(c => `<span class="tag tag--comp">${c.code}</span>`).join("");
+  const cePills = project.competences.flatMap(c => c.ce).map(ce => `<span class="tag">${ce}</span>`).join("");
+
+  article.innerHTML = `
+    <div class="projet__meta">
+      <span class="projet__date">${project.periode}</span>
+      <span class="projet__contexte">${project.contexte}</span>
+    </div>
+    <h3 class="projet__titre">${project.titre}</h3>
+    <p class="projet__desc">${project.description}</p>
+    <div class="projet__group">
+      <p class="projet__group-label">Compétences mobilisées</p>
+      <div class="projet__pills">${compPills}</div>
+    </div>
+    <div class="projet__group">
+      <p class="projet__group-label">Techniques &amp; outils</p>
+      <div class="projet__pills">${cePills}</div>
+    </div>
+    <a class="projet__lien" href="${project.lien}" target="_blank" rel="noopener">Voir le livrable →</a>
+  `;
+  return article;
+}
+
+function renderProjects(){
+  PROJECTS.forEach(project => {
+    project.competences.forEach(({ code }) => {
+      const container = document.querySelector(`.projets[data-comp="${CSS.escape(code)}"]`);
+      if (!container){
+        console.warn(`Aucun bloc avec data-comp="${code}" trouvé pour le projet "${project.id}".`);
+        return;
+      }
+      container.appendChild(buildCard(project));
+    });
+  });
+}
+
+function updateEmptyStates(){
+  document.querySelectorAll(".projets").forEach(container => {
+    const visible = container.querySelectorAll(".projet:not(.is-hidden)").length;
+    const code = container.dataset.comp;
+    const empty = document.querySelector(`.projet-empty[data-comp-empty="${CSS.escape(code)}"]`);
+    if (empty) empty.style.display = visible ? "none" : "block";
+  });
+}
+
+function applyYearFilter(year){
+  document.querySelectorAll(".projet").forEach(card => {
+    card.classList.toggle("is-hidden", year !== "toutes" && card.dataset.annee !== year);
+  });
+  updateEmptyStates();
+}
+
+function buildYearFilters(){
+  const wrap = document.getElementById("yearFilters");
+  const years = [...new Set(PROJECTS.map(p => p.annee))].sort().reverse();
+
+  const makePill = (value, label, active) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "year-pill" + (active ? " active" : "");
+    btn.textContent = label;
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
+    btn.addEventListener("click", () => {
+      wrap.querySelectorAll(".year-pill").forEach(p => {
+        p.classList.remove("active");
+        p.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
+      applyYearFilter(value);
+    });
+    return btn;
+  };
+
+  wrap.appendChild(makePill("toutes", "Toutes les années", true));
+  years.forEach(y => wrap.appendChild(makePill(y, y, false)));
+}
+
+renderProjects();
+buildYearFilters();
+updateEmptyStates();
+
+// Mise en avant de l'onglet de bloc actif au scroll
+const sections = document.querySelectorAll("[data-section]");
+const tabs = document.querySelectorAll(".tab");
+const setActiveTab = (id) => tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === id));
+
+if ("IntersectionObserver" in window){
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) setActiveTab(entry.target.id); });
+  }, { rootMargin: "-15% 0px -70% 0px" });
+  sections.forEach(s => observer.observe(s));
+}
+tabs.forEach(tab => tab.addEventListener("click", () => setActiveTab(tab.dataset.tab)));
+</script>
+
+</body>
+</html>
