@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Laurine Gautier</title>
+<meta name="description" content="Portfolio de Laurine Gautier — BUT Science des données, IUT de Vannes">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper: #ECEEE9;
+    --card: #F7F8F4;
+    --ink: #1C211D;
+    --ink-soft: #4F564D;
+    --line: #CDD2C7;
+    --green: #2F6B4F;
+    --green-bg: #E3ECE5;
+    --blue: #2A5A8C;
+    --blue-bg: #E2E9F0;
+    --rust: #9C4A2E;
+    --rust-bg: #F1E5DF;
+    --serif: "Spectral", Georgia, serif;
+    --sans: "Work Sans", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+    --nav-width: 220px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+  :focus-visible{ outline: 2px solid var(--blue); outline-offset: 3px; }
+
+  .skip-link{
+    position: absolute; left: -999px; top: 0;
+    background: var(--ink); color: var(--paper);
+    padding: 0.6rem 1rem; z-index: 100;
+  }
+  .skip-link:focus{ left: 1rem; top: 1rem; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 4.5rem 1.5rem 3rem;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .hero__eyebrow{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin: 0 0 0.9rem;
+  }
+  .hero__nom{
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.3rem, 6vw, 3.4rem);
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .hero__formation{
+    font-family: var(--mono);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0 0 1.6rem;
+  }
+  .hero__intro{
+    font-size: 1.08rem;
+    max-width: 60ch;
+    color: var(--ink-soft);
+    margin: 0 0 1.8rem;
+  }
+  .hero__contact{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+  .hero__contact a{
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1px;
+  }
+  .hero__contact a:hover{ color: var(--green); border-color: var(--green); }
+
+  /* ---------- LAYOUT ---------- */
+  .layout{
+    display: flex;
+    align-items: flex-start;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+    gap: 2.5rem;
+  }
+
+  /* ---------- DOSSIER NAV ---------- */
+  .dossier-nav{
+    position: sticky;
+    top: 1.5rem;
+    flex: 0 0 var(--nav-width);
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .bloc-label{
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.75;
+    margin: 0.9rem 0 0.15rem;
+    padding-left: 0.3rem;
+  }
+  .bloc-label:first-child{ margin-top: 0; }
+  .tab{
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 0.9rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    font-weight: 500;
+    transform: translateX(0.6rem);
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  }
+  .tab:hover{ transform: translateX(0.2rem); color: var(--ink); }
+  .tab.active{
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateX(0);
+    border-color: var(--ink);
+  }
+  .nav-add{
+    margin: 0.6rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    opacity: 0.65;
+    padding: 0 0.9rem;
+  }
+
+  /* ---------- MAIN ---------- */
+  main{ flex: 1 1 auto; min-width: 0; }
+
+  .year-filter-bar{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    padding: 0.9rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 1.5rem;
+    background: var(--paper);
+    z-index: 4;
+  }
+  .year-filter-bar__label{
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    flex: 0 0 auto;
+  }
+  .year-filters{ display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .year-pill{
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .year-pill:hover{ border-color: var(--ink-soft); color: var(--ink); }
+  .year-pill.active{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .bloc{
+    padding-top: 1.5rem;
+    margin-bottom: 3.5rem;
+    scroll-margin-top: 5.5rem;
+  }
+  .bloc:not(:first-of-type){
+    border-top: 1px solid var(--line);
+    padding-top: 3rem;
+  }
+  .bloc__header{ margin-bottom: 1.6rem; }
+  .bloc__group{
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin: 0 0 0.3rem;
+  }
+  .bloc__titletop{
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .bloc__titre{
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: 600;
+    margin: 0;
+  }
+  .bloc__desc{
+    color: var(--ink-soft);
+    max-width: 65ch;
+    margin: 0.6rem 0 0;
+  }
+
+  .ce-details{ margin-top: 1rem; }
+  .ce-details summary{
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    list-style: none;
+  }
+  .ce-details summary::-webkit-details-marker{ display: none; }
+  .ce-details summary::before{
+    content: "▸ ";
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+  .ce-details[open] summary::before{ transform: rotate(90deg); }
+  .ce-list{
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .ce-list li{
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--line);
+    line-height: 1.5;
+  }
+  .ce-list strong{
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    color: var(--ink);
+    margin-right: 0.3rem;
+  }
+
+  .badge{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.6rem 0.25rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge::before{
+    content: "";
+    width: 0.6rem; height: 0.6rem;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: inline-block;
+  }
+  .badge--valide{ background: var(--green-bg); color: var(--green); }
+  .badge--valide::before{ background: var(--green); }
+  .badge--cours{ background: var(--blue-bg); color: var(--blue); }
+  .badge--cours::before{ background: transparent; }
+  .badge--avenir{ background: var(--rust-bg); color: var(--rust); }
+  .badge--avenir::before{ background: transparent; }
+
+  /* ---------- PROJECT CARDS ---------- */
+  .projets{
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    margin-top: 1.6rem;
+  }
+  /* Masquer les conteneurs vides pour ne pas créer d'espace inutile */
+  .projets:empty{ display: none; }
+
+  .projet{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.5rem 1.6rem;
+  }
+  .projet.is-hidden{ display: none; }
+  .projet__meta{
+    display: flex;
+    gap: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .projet__titre{
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .projet__desc{
+    margin: 0 0 1rem;
+    color: var(--ink-soft);
+    max-width: 70ch;
+  }
+  .projet__group{ margin-bottom: 0.8rem; }
+  .projet__group-label{
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.75;
+    margin: 0 0 0.4rem;
+  }
+  .projet__pills{ display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag{
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+    color: var(--ink-soft);
+  }
+  .tag--comp{
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    font-weight: 500;
+  }
+  .projet__lien{
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+  }
+  .projet__lien:hover{ color: var(--green); border-color: var(--green); }
+
+  .projet-empty{
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    opacity: 0.75;
+    margin-top: 1.2rem;
+    display: none; /* géré par JS */
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .layout{ flex-direction: column; }
+    .dossier-nav{
+      position: sticky;
+      top: 0;
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      background: var(--paper);
+      padding: 0.8rem 0 0.6rem;
+      gap: 0.5rem;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+    }
+    .bloc-label{
+      flex: 0 0 auto;
+      margin: 0;
+      padding: 0 0.6rem;
+      border-left: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+    }
+    .bloc-label:first-child{ border-left: none; padding-left: 0; }
+    .tab{
+      flex: 0 0 auto;
+      transform: none;
+      border-radius: 6px;
+      border-right: 1px solid var(--line);
+    }
+    .nav-add{ display: none; }
+    .year-filter-bar{ position: static; top: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; }
+  }
+
+  @media print{
+    .dossier-nav{ display: none; }
+    .layout{ display: block; }
+    .projet.is-hidden{ display: block; }
+    .ce-details{ display: block; }
+    body{ background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#contenu" class="skip-link">Aller au contenu</a>
+
+<header class="hero">
+  <p class="hero__eyebrow">Portfolio de BUT2</p>
+  <h1 class="hero__nom">Laurine GAUTIER</h1>
+  <p class="hero__formation">BUT Science des données · IUT de Vannes · Année universitaire 2025-2026</p>
+  <p class="hero__intro">
+    Étudiante en BUT Science des données, je m'intéresse particulièrement à l'analyse statistique
+    et à la valorisation des données à travers des outils décisionnels. Ce portfolio présente les
+    projets qui illustrent ma progression et ma maîtrise des compétences de ma formation.
+  </p>
+  <div class="hero__contact">
+    <a href="mailto:laurine.gautier2006@gmail.com">laurine.gautier2006@gmail.com</a>
+    <a href="tel:0749980232">07 49 98 02 32</a>
+  </div>
+</header>
+
+<div class="layout">
+
+  <nav class="dossier-nav" aria-label="Navigation du portfolio">
+    <p class="bloc-label">Bloc commun</p>
+    <a href="#bc01" class="tab active" data-tab="bc01">Traiter</a>
+    <a href="#bc02" class="tab" data-tab="bc02">Analyser</a>
+    <a href="#bc03" class="tab" data-tab="bc03">Valoriser</a>
+    <p class="bloc-label">Bloc parcours</p>
+    <a href="#bc04" class="tab" data-tab="bc04">Développer</a>
+    <p class="nav-add"></p>
+  </nav>
+
+  <main id="contenu">
+
+    <div class="year-filter-bar">
+      <p class="year-filter-bar__label">Filtrer par année</p>
+      <div class="year-filters" id="yearFilters"></div>
+    </div>
+
+    <!-- BLOC TRAITER -->
+    <section class="bloc" id="bc01" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc commun</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Traiter</h2>
+          <span class="badge badge--valide">Validé</span>
+        </div>
+        <p class="bloc__desc">Traiter des données à des fins décisionnelles.</p>
+        <details class="ce-details">
+          <summary>Composantes essentielles</summary>
+          <ul class="ce-list">
+            <li><strong>CE1.01 :</strong> En intervenant à toutes les étapes du cycle de vie de la donnée.</li>
+            <li><strong>CE1.02 :</strong> En utilisant le modèle de données adapté aux besoins.</li>
+            <li><strong>CE1.03 :</strong> En s'inscrivant dans une démarche de documentation adaptée au public visé.</li>
+            <li><strong>CE1.04 :</strong> En traduisant correctement les demandes métier en programmes.</li>
+            <li><strong>CE1.05 :</strong> En écrivant un programme correctement structuré et documenté.</li>
+            <li><strong>CE1.06 :</strong> En identifiant les librairies et langages dédiés.</li>
+          </ul>
+        </details>
+      </header>
+      <div class="projets" data-comp="CE1.01"></div>
+      <div class="projets" data-comp="CE1.02"></div>
+      <div class="projets" data-comp="CE1.03"></div>
+      <div class="projets" data-comp="CE1.04"></div>
+      <div class="projets" data-comp="CE1.05"></div>
+      <div class="projets" data-comp="CE1.06"></div>
+      <p class="projet-empty">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+    <!-- BLOC ANALYSER -->
+    <section class="bloc" id="bc02" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc commun</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Analyser</h2>
+          <span class="badge badge--cours">En cours</span>
+        </div>
+        <p class="bloc__desc">Analyser statistiquement les données.</p>
+        <details class="ce-details">
+          <summary>Composantes essentielles</summary>
+          <ul class="ce-list">
+            <li><strong>CE2.01 :</strong> En tenant compte du contexte de l'étude.</li>
+            <li><strong>CE2.02 :</strong> En mettant en évidence les grandes tendances et les informations principales.</li>
+            <li><strong>CE2.03 :</strong> En identifiant et en mettant en œuvre les techniques adaptées aux attentes du client.</li>
+            <li><strong>CE2.04 :</strong> En identifiant et en mettant en œuvre les techniques adaptées aux données complexes.</li>
+            <li><strong>CE2.05 :</strong> En tenant compte du contexte inférentiel.</li>
+          </ul>
+        </details>
+      </header>
+      <div class="projets" data-comp="CE2.01"></div>
+      <div class="projets" data-comp="CE2.02"></div>
+      <div class="projets" data-comp="CE2.03"></div>
+      <div class="projets" data-comp="CE2.04"></div>
+      <div class="projets" data-comp="CE2.05"></div>
+      <p class="projet-empty">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+    <!-- BLOC VALORISER -->
+    <section class="bloc" id="bc03" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc commun</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Valoriser</h2>
+          <span class="badge badge--valide">Validé</span>
+        </div>
+        <p class="bloc__desc">Valoriser une production dans un contexte professionnel.</p>
+        <details class="ce-details">
+          <summary>Composantes essentielles</summary>
+          <ul class="ce-list">
+            <li><strong>CE3.01 :</strong> En s'adaptant au niveau d'expertise, à la culture et au statut du destinataire.</li>
+            <li><strong>CE3.02 :</strong> En s'exprimant correctement, aussi bien en français qu'en anglais.</li>
+            <li><strong>CE3.03 :</strong> En veillant aux aspects éthiques, déontologiques et réglementaires.</li>
+            <li><strong>CE3.04 :</strong> En interprétant et contextualisant les résultats.</li>
+            <li><strong>CE3.05 :</strong> En utilisant la forme de restitution adaptée.</li>
+            <li><strong>CE3.06 :</strong> En tenant compte des réalités économiques et managériales des entreprises.</li>
+          </ul>
+        </details>
+      </header>
+      <div class="projets" data-comp="CE3.01"></div>
+      <div class="projets" data-comp="CE3.02"></div>
+      <div class="projets" data-comp="CE3.03"></div>
+      <div class="projets" data-comp="CE3.04"></div>
+      <div class="projets" data-comp="CE3.05"></div>
+      <div class="projets" data-comp="CE3.06"></div>
+      <p class="projet-empty">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+    <!-- BLOC DÉVELOPPER -->
+    <section class="bloc" id="bc04" data-section>
+      <header class="bloc__header">
+        <p class="bloc__group">Bloc parcours</p>
+        <div class="bloc__titletop">
+          <h2 class="bloc__titre">Développer</h2>
+          <span class="badge badge--valide">Validé</span>
+        </div>
+        <p class="bloc__desc">Développer un outil décisionnel.</p>
+        <details class="ce-details">
+          <summary>Composantes essentielles</summary>
+          <ul class="ce-list">
+            <li><strong>CE4.01 :</strong> En mettant en œuvre une structuration des données adaptée à leurs caractéristiques.</li>
+            <li><strong>CE4.02 :</strong> En assurant la qualité des données et minimisant les biais.</li>
+            <li><strong>CE4.03 :</strong> En étant sensible aux aspects éthiques, déontologiques et juridiques.</li>
+            <li><strong>CE4.04 :</strong> En réalisant des solutions de visualisation spécifiques aux données métier.</li>
+            <li><strong>CE4.05 :</strong> En intervenant à différents niveaux de la chaîne décisionnelle.</li>
+            <li><strong>CE4.06 :</strong> En utilisant des méthodes de développement logiciel.</li>
+          </ul>
+        </details>
+      </header>
+      <div class="projets" data-comp="CE4.01"></div>
+      <div class="projets" data-comp="CE4.02"></div>
+      <div class="projets" data-comp="CE4.03"></div>
+      <div class="projets" data-comp="CE4.04"></div>
+      <div class="projets" data-comp="CE4.05"></div>
+      <div class="projets" data-comp="CE4.06"></div>
+      <p class="projet-empty">Aucun projet renseigné pour ce bloc.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>Laurine GAUTIER — Portfolio mis à jour en juin 2026</p>
+</footer>
+
+<script>
+/* ============================================================================
+   PROJECTS
+   - "codes" : tableau (ou string) des codes CE à afficher sur la carte
+                ET utilisés pour router vers le bon bloc.
+   - "ce"    : techniques / outils associés à ces codes.
+   Un projet peut couvrir plusieurs blocs : listez autant d'entrées que
+   de blocs concernés dans "competences".
+   ============================================================================ */
+const PROJECTS = [
+  {
+    id: "projet-1",
+    titre: "Conception de tableaux de bord interactifs pour le suivi des routes",
+    periode: "Mars – Juin 2026",
+    annee: "2025-2026",
+    contexte: "Stage BUT2 à la DIR Ouest",
+    description: "Dans le cadre d'un stage de 2ᵉ année de BUT à la DIR Ouest, une étude statistique a été réalisée afin d'évaluer le nombre d'habilitations des agents à la conduite d'engins (ACES et CACES) par rapport aux objectifs fixés pour chaque CEI. Développée en R et R Markdown, cette analyse a nécessité un important travail de traitement, d'automatisation et de sécurisation des données, pour produire des rapports destinés aux districts et à la direction. Le stage a également porté sur l'analyse de la sécurité et du bien-être au travail des agents (agressions et incivilités, accidents du travail et accidents matériels). Cette étude a été faite avec Talend, PostgreSQL et Superset pour obtenir un tableau de bord qui présente de manière interactive les résultats de l'étude statistique : chiffres clés, profils des agents touchés, évolutions temporelles, localisations les plus touchées, etc.",
+    lien: "https://dirouest-cg.github.io/habilitation/",
+    competences: [
+      { codes: ["CE1.01","CE1.02","CE1.03","CE1.04","CE1.05","CE1.06"], ce: ["Traitement des données","Automatisation","R / RMarkdown"] },
+      { codes: ["CE2.01","CE2.02","CE2.03","CE2.04","CE2.05"],          ce: ["Analyse statistique","Interprétation des résultats"] },
+      { codes: ["CE3.01","CE3.02","CE3.03","CE3.04","CE3.05","CE3.06"], ce: ["Datavisualisation","Communication des résultats"] },
+      { codes: ["CE4.01","CE4.02","CE4.03","CE4.04","CE4.05","CE4.06"], ce: ["Superset","PostgreSQL","Talend"] }
+    ]
+  },
+  {
+    id: "projet-2",
+    titre: "Visualisation des résultats de santé de patients de l'AP-HP",
+    periode: "Janvier – Juin 2025",
+    annee: "2024-2025",
+    contexte: "Projet",
+    description: "De janvier à juin 2025, dans le cadre d'un projet pour l'AP-HP, j'ai participé à la conception d'un outil permettant de visualiser et comparer les résultats de santé des patients. J'ai analysé les besoins, automatisé le calcul de scores (dont l'IPAQ) à l'aide de Python, réalisé des traitements et transformations de données, puis généré des fiches PDF personnalisées. Ce travail a permis de réduire significativement le temps de traitement tout en produisant les différents livrables du projet.",
+    lien: "#",
+    competences: [
+      { codes: ["CE1.01","CE1.02","CE1.03","CE1.04","CE1.05","CE1.06"], ce: ["Python", "Automatisation", "Génération PDF"] },
+      { codes: ["CE2.01","CE2.02","CE2.03","CE2.04","CE2.05"], ce: ["Nettoyage des données", "Analyse des besoins"] },
+      { codes: ["CE3.01","CE3.02","CE3.03","CE3.04","CE3.05","CE3.06"], ce: ["Santé", "Restitution des résultats"] }
+    ]
+  },
+  {
+    id: "projet-3",
+    titre: "Enquête de notoriété de la CPIE de Belle-Île-en-Mer",
+    periode: "Septembre – Décembre 2024",
+    annee: "2024-2025",
+    contexte: "Projet",
+    description: "Lors de la SAÉ 1.06, j'ai conçu et administré une enquête pour le CPIE de Belle-Île-en-Mer afin d'évaluer sa notoriété et les valeurs perçues. J'ai nettoyé et structuré les données collectées (suppression des doublons, correction des erreurs, traitement des valeurs manquantes) avant de les analyser. J'ai également identifié et corrigé des biais de formulation dans le questionnaire pour améliorer la fiabilité des réponses. L'analyse statistique (corrélations, V de Cramer, segmentations) m'a permis d'interpréter les résultats, de mesurer l'impact des actions menées et de proposer des pistes d'amélioration. Enfin, j'ai réalisé des supports visuels et assuré la restitution des résultats à l'écrit et à l'oral, en utilisant des outils comme Le Sphynx et Excel.",
+    lien: "#",
+    competences: [
+      { codes: ["CE3.01","CE3.02","CE3.04","CE3.05","CE3.06"], ce: ["Enquête de notoriété","Nettoyage des données","Analyse statistique","Biais de questionnaire","Segmentation des données","Restitution des résultats"] }
+    ]
+  }
+];
+
+/* ---------- Construction d'une carte projet ---------- */
+function buildCard(project) {
+  const article = document.createElement("article");
+  article.className = "projet";
+  article.dataset.annee = project.annee;
+  article.dataset.id = project.id;
+
+  const compPills = project.competences.map(c => {
+    const labels = Array.isArray(c.codes) ? c.codes : (c.codes ? [c.codes] : [c.code]);
+    return labels.map(l => `<span class="tag tag--comp">${l}</span>`).join("");
+  }).join("");
+
+  const cePills = project.competences
+    .flatMap(c => c.ce)
+    .filter((v, i, a) => a.indexOf(v) === i) // dédoublonnage
+    .map(ce => `<span class="tag">${ce}</span>`).join("");
+
+  article.innerHTML = `
+    <div class="projet__meta">
+      <span>${project.periode}</span>
+      <span>${project.contexte}</span>
+    </div>
+    <h3 class="projet__titre">${project.titre}</h3>
+    <p class="projet__desc">${project.description}</p>
+    <div class="projet__group">
+      <p class="projet__group-label">Compétences mobilisées</p>
+      <div class="projet__pills">${compPills}</div>
+    </div>
+    <div class="projet__group">
+      <p class="projet__group-label">Techniques &amp; outils</p>
+      <div class="projet__pills">${cePills}</div>
+    </div>
+    ${project.lien && project.lien !== "#"
+      ? `<a class="projet__lien" href="${project.lien}" target="_blank" rel="noopener">Voir le livrable →</a>`
+      : ""}
+  `;
+  return article;
+}
+
+/* ---------- Injection des projets (1 carte par projet par bloc) ---------- */
+function renderProjects() {
+  PROJECTS.forEach(project => {
+    // Tous les codes CE uniques du projet
+    const allKeys = [];
+    project.competences.forEach(comp => {
+      const keys = Array.isArray(comp.codes) ? comp.codes
+                 : comp.codes ? [comp.codes]
+                 : [comp.code];
+      keys.forEach(k => { if (k && !allKeys.includes(k)) allKeys.push(k); });
+    });
+
+    // Injecter une seule carte par section (bloc) touchée
+    const usedSections = new Set();
+    allKeys.forEach(key => {
+      const container = document.querySelector(`.projets[data-comp="${CSS.escape(key)}"]`);
+      if (!container) return;
+      const section = container.closest("section");
+      if (usedSections.has(section)) return;
+      usedSections.add(section);
+      container.appendChild(buildCard(project));
+    });
+  });
+}
+
+/* ---------- État vide : 1 message par section ---------- */
+function updateEmptyStates() {
+  document.querySelectorAll("section.bloc[data-section]").forEach(section => {
+    const hasVisible = section.querySelectorAll(".projet:not(.is-hidden)").length > 0;
+    const empty = section.querySelector(".projet-empty");
+    if (empty) empty.style.display = hasVisible ? "none" : "block";
+  });
+}
+
+/* ---------- Filtre par année ---------- */
+function applyYearFilter(year) {
+  document.querySelectorAll(".projet").forEach(card => {
+    card.classList.toggle("is-hidden", year !== "toutes" && card.dataset.annee !== year);
+  });
+  updateEmptyStates();
+}
+
+/* ---------- Construction des pills année ---------- */
+function buildYearFilters() {
+  const wrap = document.getElementById("yearFilters");
+  const years = [...new Set(PROJECTS.map(p => p.annee))].sort().reverse();
+
+  const makePill = (value, label, active) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "year-pill" + (active ? " active" : "");
+    btn.textContent = label;
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
+    btn.addEventListener("click", () => {
+      wrap.querySelectorAll(".year-pill").forEach(p => {
+        p.classList.remove("active");
+        p.setAttribute("aria-pressed", "false");
+      });
+      btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
+      applyYearFilter(value);
+    });
+    return btn;
+  };
+
+  wrap.appendChild(makePill("toutes", "Toutes les années", true));
+  years.forEach(y => wrap.appendChild(makePill(y, y, false)));
+}
+
+/* ---------- Onglet actif au scroll ---------- */
+function initScrollSpy() {
+  const sections = document.querySelectorAll("section[data-section]");
+  const tabs = document.querySelectorAll(".tab");
+
+  const setActiveTab = id =>
+    tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === id));
+
+  // Clic sur un onglet
+  tabs.forEach(tab => tab.addEventListener("click", () => setActiveTab(tab.dataset.tab)));
+
+  // Scroll spy : on cherche la section dont le haut est le plus proche du tiers supérieur de l'écran
+  const onScroll = () => {
+    let best = null;
+    let bestDist = Infinity;
+    sections.forEach(s => {
+      const top = s.getBoundingClientRect().top;
+      const dist = Math.abs(top - window.innerHeight * 0.25);
+      if (top <= window.innerHeight * 0.6 && dist < bestDist) {
+        bestDist = dist;
+        best = s.id;
+      }
+    });
+    if (best) setActiveTab(best);
+  };
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll(); // init
+}
+
+/* ---------- Init ---------- */
+renderProjects();
+buildYearFilters();
+updateEmptyStates();
+initScrollSpy();
+</script>
+
+</body>
+</html>
